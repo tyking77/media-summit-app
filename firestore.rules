@@ -63,7 +63,7 @@ service cloud.firestore {
         && request.resource.data.type == myType()
         && request.resource.data.anonymous is bool
         && str(request.resource.data.text, 1, 280)
-        && str(request.resource.data.name, 1, 80);
+        && str(request.resource.data.name, 1, 81);
       allow read: if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid);
       allow update, delete: if isAdmin();
     }
