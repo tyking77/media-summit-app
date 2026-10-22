@@ -1,0 +1,38 @@
+[
+  {
+    "id": "abbey",
+    "name": "Abbey Buttacavoli",
+    "role": "Moderator",
+    "classYear": "'19",
+    "title": "Digital Editor, NBC 10 News (WJAR), Providence",
+    "bio": "Abbey was news director of WTOP-10 while studying broadcasting at Oswego. After internships at Spectrum News Albany and CNYCentral, she reported for WWNY in Watertown, then anchored morning and noon newscasts at CNYCentral in Syracuse. She joined NBC 10 in Providence in 2024 as an education reporter and moved to the digital team this fall.",
+    "photo": "speakers/abbey.jpg"
+  },
+  {
+    "id": "andrew",
+    "name": "Andrew Miano",
+    "role": "Panelist",
+    "classYear": "'95",
+    "title": "Producer, Depth of Field Productions",
+    "bio": "Andrew started in the mailroom at the William Morris Agency in New York and built a career in film production, working on movies including A Single Man, Admission, Nick and Norah's Infinite Playlist and Being Flynn. He now works at Depth of Field Productions.",
+    "photo": "speakers/andrew.jpg"
+  },
+  {
+    "id": "ryan",
+    "name": "Ryan Sprague",
+    "role": "Panelist",
+    "classYear": "'06",
+    "title": "Author, TV personality, filmmaker and UFO researcher",
+    "bio": "Ryan is a recurring commentator on History's Ancient Aliens and The UnXplained with William Shatner, and lead investigator and co-host of The CW's Mysteries Decoded. He wrote the best-selling Somewhere in the Skies: A Human Approach to the UFO Phenomenon and has hosted the podcast of the same name for more than a decade. He has consulted for Amblin Entertainment, Netflix and Discovery.",
+    "photo": "speakers/ryan.jpg"
+  },
+  {
+    "id": "evan",
+    "name": "Evan Hirsch",
+    "role": "Panelist",
+    "classYear": "",
+    "title": "AI and journalism lead, OpenAI",
+    "bio": "Evan revived his high school journalism club in Cape May, New Jersey, then went on to produce news for NBC and CBS. A Syracuse University alum, he now leads initiatives at OpenAI where AI and journalism meet.",
+    "photo": "speakers/evan.jpg"
+  }
+]

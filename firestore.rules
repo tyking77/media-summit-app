@@ -1,0 +1,86 @@
+rules_version = '2';
+
+// Media Summit companion app.
+// Everyone in the room is an anonymous Firebase user who types their name and
+// email. The admin is one email/password account created in the Firebase console.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function email() { return request.auth.token.get('email', ''); }
+    function provider() { return request.auth.token.firebase.sign_in_provider; }
+    function isAdmin() { return signedIn() && provider() == 'password' && email() == 'tyler.king@oswego.edu'; }
+    function isMe(uid) { return signedIn() && request.auth.uid == uid; }
+    function hasAttendee() { return exists(/databases/$(database)/documents/attendees/$(request.auth.uid)); }
+    function myType() { return get(/databases/$(database)/documents/attendees/$(request.auth.uid)).data.type; }
+    function str(v, lo, hi) { return v is string && v.size() >= lo && v.size() <= hi; }
+
+    // Who joined. Type follows the email they typed: @oswego.edu = student.
+    match /attendees/{uid} {
+      allow read: if isMe(uid) || isAdmin();
+      allow create: if isMe(uid)
+        && str(request.resource.data.name, 1, 81)
+        && str(request.resource.data.email, 3, 120)
+        && request.resource.data.email.matches('[^@ ]+@[^@ ]+[.][^@ ]+')
+        && (
+          (request.resource.data.type == 'student' && request.resource.data.email.matches('.*@oswego[.]edu$'))
+          || (request.resource.data.type == 'guest' && !request.resource.data.email.matches('.*@oswego[.]edu$'))
+        );
+      // Owners may update their professors list, nothing else.
+      allow update: if isMe(uid)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['professors', 'lastSeenAt'])
+        && (!('professors' in request.resource.data) || str(request.resource.data.professors, 0, 500));
+      allow delete: if isAdmin();
+    }
+
+    match /polls/{pollId} {
+      allow read: if signedIn();
+      allow write: if isAdmin();
+
+      // One vote doc per person (doc id = uid), so changing a vote overwrites it.
+      match /votes/{uid} {
+        allow read: if signedIn();
+        allow create, update: if isMe(uid)
+          && hasAttendee()
+          && get(/databases/$(database)/documents/polls/$(pollId)).data.status == 'open'
+          && request.resource.data.keys().hasOnly(['choices', 'updatedAt'])
+          && request.resource.data.choices is list
+          && request.resource.data.choices.size() >= 1
+          && request.resource.data.choices.size() <= 6
+          && (get(/databases/$(database)/documents/polls/$(pollId)).data.multiSelect == true
+              || request.resource.data.choices.size() == 1);
+        allow delete: if isAdmin();
+      }
+    }
+
+    // Raw questions: private to the asker and the admin.
+    match /questions/{qid} {
+      allow create: if signedIn()
+        && hasAttendee()
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.status == 'pending'
+        && request.resource.data.type == myType()
+        && request.resource.data.anonymous is bool
+        && str(request.resource.data.text, 1, 280)
+        && str(request.resource.data.name, 1, 80);
+      allow read: if isAdmin() || (signedIn() && resource.data.uid == request.auth.uid);
+      allow update, delete: if isAdmin();
+    }
+
+    // Approved copies with no uid or email; safe for the projector and moderator.
+    match /screened/{qid} {
+      allow read: if signedIn();
+      allow write: if isAdmin();
+    }
+
+    match /live/{docId} {
+      allow read: if signedIn();
+      allow write: if isAdmin();
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

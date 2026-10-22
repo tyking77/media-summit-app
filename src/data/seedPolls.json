@@ -1,0 +1,54 @@
+[
+  {
+    "id": "five-years",
+    "order": 1,
+    "prompt": "Where do you see yourself in 5 years?",
+    "multiSelect": false,
+    "options": [
+      { "id": "employed", "text": "Employed" },
+      { "id": "higher-ed", "text": "In Higher Education" },
+      { "id": "dream-job", "text": "In My Dream Job" },
+      { "id": "carving", "text": "Still Carving My Own Path" },
+      { "id": "not-sure", "text": "I'm Not Sure" }
+    ]
+  },
+  {
+    "id": "obstacles",
+    "order": 2,
+    "prompt": "What obstacles do you expect to face in your early career path?",
+    "multiSelect": true,
+    "options": [
+      { "id": "financial", "text": "Financial" },
+      { "id": "connections", "text": "Connections" },
+      { "id": "confidence", "text": "Confidence" },
+      { "id": "skills", "text": "Not Enough Skills" },
+      { "id": "unknown", "text": "The Unknown" }
+    ]
+  },
+  {
+    "id": "ai",
+    "order": 3,
+    "prompt": "Finish the sentence: When it comes to media, AI is...",
+    "multiSelect": false,
+    "options": [
+      { "id": "good", "text": "A Force for Good" },
+      { "id": "terrible", "text": "Terrible" },
+      { "id": "scary", "text": "Scary" },
+      { "id": "not-relevant", "text": "Not Relevant" },
+      { "id": "dont-know", "text": "Don't Know" }
+    ]
+  },
+  {
+    "id": "prepared",
+    "order": 4,
+    "prompt": "How prepared do you feel to enter the media industry?",
+    "multiSelect": false,
+    "options": [
+      { "id": "1", "text": "1 - Not Prepared" },
+      { "id": "2", "text": "2" },
+      { "id": "3", "text": "3" },
+      { "id": "4", "text": "4" },
+      { "id": "5", "text": "5 - Ultra-Prepared" }
+    ]
+  }
+]
